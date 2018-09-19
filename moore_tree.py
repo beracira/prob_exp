@@ -13,11 +13,11 @@ max_depth = int(sys.argv[1])
 
 # check the necessary probability condition
 # L is the left half tree assignment of the upper tree
-def prob_cond(L):
+def prob_cond(L, R):
  
     # tree assignment
     # L = [0, 1, 1, 0, 1, 0, 0, 1]
-    R = [1 - node for node in L]
+    # R = [1 - node for node in L]
     
     # left tree node selected to be 0
     D = [i + 1 for i in range(len(L)) if L[i] == 0]
@@ -25,7 +25,13 @@ def prob_cond(L):
     # right tree node selected to be 0
     E = [i + 1 for i in range(len(R)) if R[i] == 0]
     
-    # print (D, E)
+    #left tree node selected be to be 1
+    F = [i + 1 for i in range(len(L)) if L[i] == 1]
+    
+    # right tree node selected to be 1
+    G = [i + 1 for i in range(len(R)) if R[i] == 1]
+    
+    # print (D, E, F, G)
     
     poly_zero = Poly(np.zeros(1, dtype=int))
     poly_one = Poly(np.zeros(1, dtype=int))
@@ -34,11 +40,15 @@ def prob_cond(L):
     
     for i in D:
         poly_zero += poly_p ** i * poly_q
-        poly_one += poly_p * poly_q ** i
         
-    for j in E:
-        poly_zero += poly_p * poly_q ** j
-        poly_one += poly_p ** j * poly_q
+    for i in E:
+        poly_zero += poly_p * poly_q ** i
+        
+    for i in F:
+        poly_one += poly_p ** i * poly_q
+    
+    for i in G:
+        poly_one += poly_p * poly_q ** i
 
     x = [-int(e) for e in poly_zero.coef]
     y = [-int(e) for e in poly_one.coef]
@@ -61,12 +71,16 @@ def prob_cond(L):
 
 
     if len(L) >= max_depth:
-        print (L, p_zero, p_one)
-        return 
-    prob_cond(L + [0])
-    prob_cond(L + [1])
+        # print (poly_zero, poly_one)
+        print (L, R, p_zero, p_one)
+        return
+    prob_cond(L + [0], R + [0])
+    prob_cond(L + [0], R + [1])
+    prob_cond(L + [1], R + [0])
+    prob_cond(L + [1], R + [1])
 
 
 
 
-prob_cond([0])
+prob_cond([0], [1])
+
