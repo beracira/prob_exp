@@ -9,13 +9,12 @@ import numpy as np
 from scipy.special import comb
 from scipy import optimize
 
+max_depth = int(sys.argv[1])
+
 # check the necessary probability condition
 # L is the left half tree assignment of the upper tree
 def prob_cond(L):
-    E = Fraction(0, 1)
-    p = Fraction(int(sys.argv[1]), 100)
-    q = 1 - p
-    
+ 
     # tree assignment
     # L = [0, 1, 1, 0, 1, 0, 0, 1]
     R = [1 - node for node in L]
@@ -28,29 +27,46 @@ def prob_cond(L):
     
     # print (D, E)
     
-    # sum of the first equation
-    first_sum = 0
-    
-    #sum of the second equation
-    sec_sum = 0
+    poly_zero = Poly(np.zeros(1, dtype=int))
+    poly_one = Poly(np.zeros(1, dtype=int))
+    poly_p = Poly(np.array([0, 1], dtype=np.int))
+    poly_q = Poly(np.array([1, -1], dtype=np.int))
     
     for i in D:
-        first_sum += p ** i * q
-        sec_sum += p * q ** i
+        poly_zero += poly_p ** i * poly_q
+        poly_one += poly_p * poly_q ** i
         
     for j in E:
-        first_sum += p * q ** j
-        sec_sum += p ** j * q
+        poly_zero += poly_p * poly_q ** j
+        poly_one += poly_p ** j * poly_q
 
-    if first_sum <= 0.5 and sec_sum <= 0.5:
-        print (L)
-        return True
-    else:
-        return False
-    # print (first_sum)
-    # print (sec_sum)
-    # print (float(first_sum))
-    # print (float(sec_sum))
+    x = [-int(e) for e in poly_zero.coef]
+    y = [-int(e) for e in poly_one.coef]
+    x.reverse()
+    y.reverse()
+
+    f_x = np.poly1d(x)
+    f_y = np.poly1d(y)
+    # result = optimize.fmin(f_x, 0)
+
+    result = optimize.fmin(f_x, 0, disp=False)
+    # result = optimize.fmin(f_x, 0, disp=True)
+    p_zero = -f_x(result[0])
+    if p_zero > 0.5: return
+
+    result = optimize.fmin(f_y, 0, disp=False)
+    # result = optimize.fmin(f_y, 0, disp=True)
+    p_one = -f_y(result[0])
+    if p_one > 0.5: return
 
 
-prob_cond([0,1,0,1,0,1,0,1,0])
+    if len(L) >= max_depth:
+        print (L, p_zero, p_one)
+        return 
+    prob_cond(L + [0])
+    prob_cond(L + [1])
+
+
+
+
+prob_cond([0])
