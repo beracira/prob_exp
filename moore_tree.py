@@ -57,16 +57,13 @@ def prob_cond(L, R):
 
     f_x = np.poly1d(x)
     f_y = np.poly1d(y)
-    # result = optimize.fmin(f_x, 0)
 
-    result = optimize.fmin(f_x, 0, disp=False)
-    # result = optimize.fmin(f_x, 0, disp=True)
-    p_zero = -f_x(result[0])
+    result = optimize.minimize_scalar(f_x, bounds=(0, 1), method='bounded', options={'disp':False})
+    p_zero = -f_x(result.x)
     if p_zero > 0.5: return
 
-    result = optimize.fmin(f_y, 0, disp=False)
-    # result = optimize.fmin(f_y, 0, disp=True)
-    p_one = -f_y(result[0])
+    result = optimize.minimize_scalar(f_y, bounds=(0, 1), method='bounded', options={'disp':False})
+    p_one = -f_y(result.x)
     if p_one > 0.5: return
 
 
@@ -84,3 +81,14 @@ def prob_cond(L, R):
 
 prob_cond([0], [1])
 
+temp = (0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0)
+
+a = []
+b = []
+for i in range(len(temp)):
+    if i % 2 == 0:
+        a += [temp[i]]
+    else:
+        b += [temp[i]]
+
+print (a, b)
