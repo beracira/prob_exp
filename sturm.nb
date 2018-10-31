@@ -1,0 +1,28 @@
+Notebook[{Cell[
+BoxData[{RowBox[{"poly0"," ","=",RowBox[{RowBox[{"a","*",RowBox[{"x","^","2"}],"*",RowBox[
+{"(",RowBox[{"1","-","x"}],")"}]}],"-",RowBox[{"a","*","x",RowBox[{RowBox[{"(",RowBox[
+{"1","-","x"}],")"}],"^","2"}]}],"-",RowBox[{"x","^","3"}],"-",RowBox[{RowBox[{"(",RowBox[
+{"1","-","x"}],")"}],"^","3"}]}]}],"\n",RowBox[{"p0"," ","="," ",RowBox[{"Function","[",RowBox[
+{"x",","," ",RowBox[{"Evaluate","[","poly0","]"}]}],"]"}]}],"\n",RowBox[{"poly1"," ","="," ",RowBox[
+{"D","[",RowBox[{"poly0",","," ","x"}],"]"}]}],"\n",RowBox[{"p1"," ","="," ",RowBox[
+{"Function","[",RowBox[{"x",","," ",RowBox[{"Evaluate","[","poly1","]"}]}],"]"}]}],"\n",RowBox[
+{"poly2"," ","="," ",RowBox[{"PolynomialRemainder","[",RowBox[{"poly0",","," ","poly1",","," ","x"}],"]"}]}],"\n",RowBox[
+{"p2"," ","="," ",RowBox[{"Function","[",RowBox[{"x",","," ",RowBox[{"Evaluate","[","poly2","]"}]}],"]"}]}],"\n",RowBox[
+{"poly3"," ","="," ",RowBox[{"PolynomialRemainder","[",RowBox[{"poly1",","," ","poly2",","," ","x"}],"]"}]}],"\n",RowBox[
+{"p3"," ","="," ",RowBox[{"Function","[",RowBox[{"x",","," ",RowBox[{"Evaluate","[","poly3","]"}]}],"]"}]}],"\n",RowBox[
+{"poly4"," ","="," ",RowBox[{"PolynomialRemainder","[",RowBox[{"poly2",","," ","poly3",","," ","x"}],"]"}]}],"\n",RowBox[
+{"p4"," ","="," ",RowBox[{"Function","[",RowBox[{"x",","," ",RowBox[{"Evaluate","[","poly4","]"}]}],"]"}]}],"\n",RowBox[
+{"lst1"," ","="," ",RowBox[{"{",RowBox[{RowBox[{"p0","[","0","]"}],","," ",RowBox[
+{"p1","[","0","]"}],","," ",RowBox[{"p2","[","0","]"}],","," ",RowBox[{"p3","[","0","]"}],","," ",RowBox[
+{"p4","[","0","]"}]}],"}"}]}],"\n",RowBox[{"lst2"," ","="," ",RowBox[{"{",RowBox[
+{RowBox[{"p0","[","1","]"}],","," ",RowBox[{"p1","[","1","]"}],","," ",RowBox[{"p2","[","1","]"}],","," ",RowBox[
+{"p3","[","1","]"}],","," ",RowBox[{"p4","[","1","]"}]}],"}"}]}],"\n",RowBox[{RowBox[
+{"convert","[",RowBox[{"arg_",",","func_"}],"]"}],":="," ",RowBox[{"Function","[",RowBox[
+{"arg",","," ",RowBox[{"Evaluate","[","func","]"}]}],"]"}]}],"\n",RowBox[{"finalList"," ","="," ",RowBox[
+{RowBox[{"Function","[",RowBox[{"func",","," ",RowBox[{"convert","[",RowBox[{"a",","," ","func"}],"]"}]}],"]"}]," ","/@"," ","lst1"}]}],"\n",RowBox[
+{RowBox[{"Function","[",RowBox[{"func",","," ",RowBox[{"func","[",RowBox[{"-","1"}],"]"}]}],"]"}]," ","/@"," ","finalList"}],"\n",RowBox[
+{"finalList"," ","="," ",RowBox[{RowBox[{"Function","[",RowBox[{"func",","," ",RowBox[
+{"convert","[",RowBox[{"a",","," ","func"}],"]"}]}],"]"}]," ","/@"," ","lst2"}]}],"\n",RowBox[
+{RowBox[{RowBox[{"Function","[",RowBox[{"func",","," ",RowBox[{"func","[",RowBox[
+{"-","1"}],"]"}]}],"]"}]," ","/@"," ","finalList"}],"\n"}]}],"Input",ExpressionUUID -> "9eead343-5ebc-4ae7-8a75-57917d3be549",
+CellLabel -> "In[396]:= "]},StyleDefinitions -> "Default.nb",FrontEndVersion -> "11.3 for Wolfram Cloud 1.48 (October 18, 2018)"]
